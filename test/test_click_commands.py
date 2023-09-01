@@ -1,9 +1,11 @@
-import subprocess
 from pathlib import Path
 from test.utils import equal_images
 
 import pytest
+from click.testing import CliRunner
 from PIL import Image
+
+from benevolent.cli import xor_code
 
 
 @pytest.fixture
@@ -17,8 +19,9 @@ def xord_image():
 def test_xor_image_is_created(tmp_path, xord_image):
     """Test that the correct XOR image is created when running the xor-code command."""
     path = Path(tmp_path) / "xor_result.jpg"
-    subprocess.run(["python", "-m", "benevolent", "xor-code", "--path1", "test/images/acolchado.jpg",
-                    "--path2", "test/images/sheet.jpg", "--path-out", str(path.absolute())])
+    CliRunner().invoke(xor_code, ["--path1", "test/images/acolchado.jpg",
+                                  "--path2", "test/images/sheet.jpg",
+                                  "--path-out", str(path.absolute())])
 
     with Image.open(path) as result:
         assert equal_images(xord_image, result)
