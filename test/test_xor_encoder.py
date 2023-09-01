@@ -1,6 +1,6 @@
 from pathlib import Path
+from test.utils import equal_images
 
-import numpy as np
 import pytest
 from PIL import Image
 
@@ -34,8 +34,3 @@ def test_original_image_is_obtained(image1, image2):
 
     assert equal_images(image1, create_xor_code(image2, xor_image)) and \
            equal_images(image2, create_xor_code(image1, xor_image))
-
-
-def equal_images(image_1: Image.Image, image_2: Image.Image) -> bool:
-    """Returns True when both input images are equal."""
-    return (np.asarray(image_1) == np.asarray(image_2)).all()
