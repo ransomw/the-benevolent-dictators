@@ -12,5 +12,5 @@ flake8-docstrings~=1.6.0
 
 pytest~=7.4.0
 
-numpy
-pillow
+numpy~=1.25
+pillow~=10.0
