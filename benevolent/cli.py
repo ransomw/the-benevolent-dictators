@@ -11,9 +11,9 @@ def cli():
 
 
 @cli.command()
-@click.option("--path1", required=True, type=click.Path(exists=True))
-@click.option("--path2", required=True, type=click.Path(exists=True))
-@click.option("--path-out", required=True, type=click.Path(exists=False))
+@click.argument("path1", required=True, type=click.Path(exists=True))
+@click.argument("path2", required=True, type=click.Path(exists=True))
+@click.argument("path-out", required=True, type=click.Path(exists=False))
 def xor_code(path1, path2, path_out):
     """Exclusive or (xor) two images together"""
     with Image.open(path1) as image1, Image.open(path2) as image2:
