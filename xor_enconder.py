@@ -14,4 +14,11 @@ def create_xor_code(image1: Image.Image, image2: Image.Image) -> Image.Image:
     """
     image1_array, image2_array = np.asarray(image1), np.asarray(image2)
 
-    return Image.fromarray(image1_array ^ image2_array)
+    print("image1_array type")
+    print(type(image1_array))
+    print("image2_array type")
+    print(type(image2_array))
+
+    xor_array = image1_array ^ image2_array
+
+    return Image.fromarray(xor_array)

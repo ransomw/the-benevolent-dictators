@@ -12,7 +12,7 @@ def image1():
     """Create image1 and automatically close after test."""
     path = Path("test") / "images" / "acolchado.jpg"
     with Image.open(path) as image:
-        yield image
+        return image
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def image2():
     """Create image2 and automatically close after test."""
     path = Path("test") / "images" / "sheet.jpg"
     with Image.open(path) as image:
-        yield image
+        return image
 
 
 def test_same_xor_both_ways(image1, image2):
