@@ -1,26 +1,6 @@
-from pathlib import Path
 from test.utils import equal_images
 
-import pytest
-from PIL import Image
-
 from benevolent.xor_enconder import create_xor_code
-
-
-@pytest.fixture
-def image1():
-    """Create image1 and automatically close after test."""
-    path = Path("test") / "images" / "acolchado.jpg"
-    with Image.open(path) as image:
-        yield image
-
-
-@pytest.fixture
-def image2():
-    """Create image2 and automatically close after test."""
-    path = Path("test") / "images" / "sheet.jpg"
-    with Image.open(path) as image:
-        yield image
 
 
 def test_same_xor_both_ways(image1, image2):
