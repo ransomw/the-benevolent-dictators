@@ -23,6 +23,21 @@ def image2():
         yield image
 
 
+@pytest.fixture
+def image3():
+    """Create image3, that has a different size to 1 and 2. Automatically close it after test."""
+    path = Path("test") / "images" / "dog.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+def test_different_sized_images(image1, image3):
+    """Test that the proper exception is thrown when trying to use two different sized images."""
+    with pytest.raises(ValueError) as excinfo:
+        create_xor_code(image1, image3)
+    assert "Input images must have the same size for XOR operation." in str(excinfo.value)
+
+
 def test_same_xor_both_ways(image1, image2):
     """Tests that the order of the images doesn't change the resulting xor image."""
     assert equal_images(create_xor_code(image1, image2), create_xor_code(image2, image1))
