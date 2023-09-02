@@ -41,3 +41,10 @@ def test_input_images_same_size(image1, image2):
     size2 = image2.size
     
     assert size1 == size2 
+
+def test_input_images_same_encoding(image1, image2):
+    """Tests that the input images have the same encoding"""
+    ext1 = image1.format.lower()
+    ext2 = image2.format.lower()
+
+    assert ext1 == ext2
