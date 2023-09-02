@@ -34,3 +34,10 @@ def test_original_image_is_obtained(image1, image2):
 
     assert equal_images(image1, create_xor_code(image2, xor_image)) and \
            equal_images(image2, create_xor_code(image1, xor_image))
+
+def test_input_images_same_size(image1, image2):
+    """Tests that the input images are the same pixel size"""
+    size1 = image1.size
+    size2 = image2.size
+    
+    assert size1 == size2 
