@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from xor_enconder import create_xor_code
+from benevolent.xor_enconder import create_xor_code
 
 
 @pytest.fixture
