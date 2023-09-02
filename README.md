@@ -22,5 +22,5 @@ python -m benevolent --help
 for instance
 
 ```shell
-python -m benevolent xor-code --path1 test/images/acolchado.jpg --path2 test/images/sheet.jpg --path-out as_xor.jpg
+python -m benevolent xor-code test/images/acolchado.jpg test/images/sheet.jpg as_xor.jpg
 ```
