@@ -12,6 +12,9 @@ def create_xor_code(image1: Image.Image, image2: Image.Image) -> Image.Image:
     image1 ^ xor_image = image2
     image2 ^ xor_image = image1
     """
+    if image1.size != image2.size:
+        raise ValueError("input images must have the same size for XOR operation")
+
     image1_array, image2_array = np.asarray(image1), np.asarray(image2)
 
     return Image.fromarray(image1_array ^ image2_array)
