@@ -1,6 +1,14 @@
 from test.utils import equal_images
 
+import pytest
+
 from benevolent.xor_enconder import create_xor_code
+
+
+def test_different_sized_images(image1, image3):
+    """Test that the proper exception is thrown when trying to use two different sized images."""
+    with pytest.raises(ValueError, match="input images must have the same size for XOR operation"):
+        create_xor_code(image1, image3)
 
 
 def test_same_xor_both_ways(image1, image2):
