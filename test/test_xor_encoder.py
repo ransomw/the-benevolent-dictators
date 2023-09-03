@@ -1,5 +1,7 @@
 from test.utils import equal_images
 
+import pytest
+
 from benevolent.xor_enconder import create_xor_code
 
 
