@@ -1,19 +1,25 @@
 from PIL import Image, ImageDraw, ImageFont
 
 
-def write_text_box(text: str, size: int, xy: tuple[float, float], image: Image.Image) -> Image.Image:
-    """Writes text inside a box."""
-    draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/FreeMono.ttf", size)
+class Writer:
+    """Allows writing text inside an image."""
 
-    draw.rectangle(draw.textbbox(xy, text, font), fill=(0, 0, 0), outline=(0, 0, 0))
+    def __init__(self, image: Image.Image, text_size: int) -> None:
+        """Create a Writer object.
 
-    write_text(text, size, xy, image)
+        inputs:
+            - image: The image that text will be written on.
+            - text_size: The size of the text that will be written.
+        """
+        self.draw = ImageDraw.Draw(image)
+        self.font = ImageFont.truetype("fonts/FreeMono.ttf", text_size)
 
+    def write_text_box(self, text: str, xy: tuple[float, float]) -> None:
+        """Write text inside a box."""
+        self.draw.rectangle(self.draw.textbbox(xy, text, self.font), fill=(0, 0, 0), outline=(0, 0, 0))
 
-def write_text(text: str, size: int, xy: tuple[float, float], image: Image.Image) -> Image.Image:
-    """Writes the input text at the coordinates xy."""
-    draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype("fonts/FreeMono.ttf", size)
-    draw.text(xy, text, font=font, fill=(255, 255, 255))
-    return image
+        self.write_text(text, xy)
+
+    def write_text(self, text: str, xy: tuple[float, float]) -> None:
+        """Write the input text at the coordinates xy."""
+        self.draw.text(xy, text, font=self.font, fill=(255, 255, 255))
