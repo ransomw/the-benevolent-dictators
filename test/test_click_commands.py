@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from test.utils import equal_images
 
 from click.testing import CliRunner
