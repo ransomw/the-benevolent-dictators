@@ -22,6 +22,7 @@ def test_xor_image_is_created(tmp_path, xord_image):
 
 
 def test_xor_decode(tmp_path):
+    """Test decoding image with .bmps"""
     xor_result_path = tmp_path / "xor_result.bmp"
     xor_decode_path = tmp_path / "xor_decode.bmp"
     path_acolchado = Path("test") / "images" / "acolchado.bmp"
@@ -37,4 +38,3 @@ def test_xor_decode(tmp_path):
     with Image.open(path_sheet) as sheet_image, Image.open(
             xor_decode_path) as decoded_image:
         assert equal_images(sheet_image, decoded_image)
-
