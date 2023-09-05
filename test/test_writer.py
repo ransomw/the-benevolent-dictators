@@ -4,8 +4,9 @@ from PIL import Image
 
 from benevolent.writer import Writer
 
+
 def test_write_hello_world(tmp_path, image1, image1_hello_world):
-    """write hello world to an image"""
+    """Write hello world to an image"""
     path = tmp_path / "writer_result.jpg"
     writer1 = Writer(image1, 36)
     writer1.write_text_box("hello world",
@@ -14,4 +15,3 @@ def test_write_hello_world(tmp_path, image1, image1_hello_world):
 
     with Image.open(path) as result:
         assert equal_images(image1_hello_world, result)
-

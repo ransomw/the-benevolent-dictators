@@ -12,7 +12,6 @@ def image1():
         yield image
 
 
-
 @pytest.fixture
 def image1_hello_world():
     """Create image1 and automatically close after test."""
