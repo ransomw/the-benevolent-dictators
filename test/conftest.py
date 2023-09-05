@@ -15,7 +15,7 @@ def image1():
 @pytest.fixture
 def image1_hello_world():
     """Create image1 and automatically close after test."""
-    path = Path("test") / "images" / "acolchado_hello_world.jpg"
+    path = Path("test") / "images" / "acolchado_hello_world.bmp"
     with Image.open(path) as image:
         yield image
 
