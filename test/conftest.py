@@ -1,3 +1,5 @@
+from benevolent import sub_cipher
+
 from pathlib import Path
 
 import pytest
@@ -34,3 +36,10 @@ def xord_image():
     path = Path("test") / "images" / "xord_image.jpg"
     with Image.open(path) as image:
         yield image
+
+
+@pytest.fixture
+def simple_sub_cipher():
+    """Load the .cipher file into an object"""
+    path = Path("test") / "ciphers" / "simple_sub_01.cipher"
+    return sub_cipher.load_simple_sub_cipher(path)
