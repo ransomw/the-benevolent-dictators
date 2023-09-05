@@ -1,9 +1,9 @@
-from benevolent import sub_cipher
-
 from pathlib import Path
 
 import pytest
 from PIL import Image
+
+from benevolent import sub_cipher
 
 
 @pytest.fixture

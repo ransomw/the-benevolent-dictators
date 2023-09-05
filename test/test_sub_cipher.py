@@ -1,6 +1,5 @@
 from benevolent.sub_cipher import (
-    encode_simple_sub_cipher,
-    decode_simple_sub_cipher,
+    decode_simple_sub_cipher, encode_simple_sub_cipher
 )
 
 
