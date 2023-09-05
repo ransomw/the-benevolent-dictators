@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -12,7 +14,8 @@ class Writer:
             - text_size: The size of the text that will be written.
         """
         self.draw = ImageDraw.Draw(image)
-        self.font = ImageFont.truetype("fonts/FreeMono.ttf", text_size)
+        font_path = str((Path("fonts") / "FreeMono.ttf").absolute())
+        self.font = ImageFont.truetype(font_path, text_size)
 
     def write_text_box(self, text: str, xy: tuple[float, float]) -> None:
         """Write text inside a box."""
