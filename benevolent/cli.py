@@ -1,6 +1,7 @@
 import click
 from PIL import Image
 
+from benevolent.conf import config_file_path
 from benevolent.writer import Writer
 from benevolent.xor_enconder import create_xor_code
 
@@ -9,6 +10,13 @@ from benevolent.xor_enconder import create_xor_code
 def cli():
     """Command-line interface root"""
     pass
+
+
+@cli.command()
+def print_config_path():
+    """Print the location of the config file to stdout"""
+    path = config_file_path()
+    click.echo(f"{path}")
 
 
 @cli.command()

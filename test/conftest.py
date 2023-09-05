@@ -48,6 +48,14 @@ def image3():
 
 
 @pytest.fixture
+def image_hello_world():
+    """Create image3, that has a different size to 1 and 2. Automatically close it after test."""
+    path = Path("test") / "images" / "hello_world.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def xord_image():
     """Create xord_image and automatically close after test."""
     path = Path("test") / "images" / "xord_image.jpg"

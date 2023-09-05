@@ -27,17 +27,11 @@ jobs:
       # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
       - name: Install dependencies
         run: |
+          sudo apt-get -y install tesseract-ocr
           python -m pip install --upgrade pip
           if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip freeze > requirements-lock.txt
 
       - name: Test with pytest
         run: |
           pytest test/
-
-      - name: Upload requirements lock file
-        uses: actions/upload-artifact@v3
-        with:
-          name: requirements-lock
-          path: requirements-lock.txt
