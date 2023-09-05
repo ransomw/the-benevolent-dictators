@@ -4,7 +4,7 @@ from test.utils import equal_images
 from click.testing import CliRunner
 from PIL import Image
 
-from benevolent.cli import xor_code
+from benevolent.cli import box_write, xor_code
 
 
 def test_xor_image_is_created(tmp_path, xord_image):
@@ -37,3 +37,19 @@ def test_xor_decode(tmp_path):
     with Image.open(path_sheet) as sheet_image, Image.open(
             xor_decode_path) as decoded_image:
         assert equal_images(sheet_image, decoded_image)
+
+
+def test_text_is_writter(tmp_path, image1_hello_world_bmp):
+    """Test writting to a bmp image."""
+    original_image_path = Path("test") / "images" / "acolchado.bmp"
+    write_result_path = tmp_path / "write_result.bmp"
+
+    CliRunner().invoke(box_write, [str(original_image_path.resolve()),
+                                   "hello world",
+                                   "--size", 36,
+                                   "-x", 0,
+                                   "-y", 0,
+                                   str(write_result_path.resolve())])
+
+    with Image.open(write_result_path) as result:
+        assert equal_images(image1_hello_world_bmp, result)
