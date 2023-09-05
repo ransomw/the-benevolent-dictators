@@ -1,7 +1,10 @@
+import os
 from pathlib import Path
 
 import pytest
 from PIL import Image
+
+IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 
 
 @pytest.fixture
