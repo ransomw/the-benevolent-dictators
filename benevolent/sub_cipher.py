@@ -7,8 +7,7 @@ class SimpleSubCipher:
     """Simple substitution cipher"""
 
     def __init__(self, chars_from: str, chars_to: str):
-        if (chars_from.lower() != chars_from or
-            chars_to.lower() != chars_to):
+        if chars_from.lower() != chars_from or chars_to.lower() != chars_to:
             raise ValueError("only lowercase characters allowed in cipher")
         if '\n' in chars_from or '\n' in chars_to:
             raise ValueError("newlines not allowed in cipher")
