@@ -7,6 +7,9 @@ class SimpleSubCipher:
     """Simple substitution cipher"""
 
     def __init__(self, chars_from: str, chars_to: str):
+        if (chars_from.lower() != chars_from or
+            chars_to.lower() != chars_to):
+            raise ValueError("only lowercase characters allowed in cipher")
         if '\n' in chars_from or '\n' in chars_to:
             raise ValueError("newlines not allowed in cipher")
         if not set(chars_from) == set(chars_to):
@@ -20,19 +23,29 @@ class SimpleSubCipher:
 
     def encode(self, char: str) -> str:
         """Encode a singe character"""
+        if len(char) != 1:
+            raise ValueError("encode precisely one char")
         try:
-            idx = self._chars_from.index(char)
+            idx = self._chars_from.index(char.lower())
         except ValueError:
             return char
-        return self._chars_to[idx]
+        encoded_char_lower = self._chars_to[idx]
+        if char == char.lower():
+            return encoded_char_lower
+        return encoded_char_lower.upper()
 
     def decode(self, char: str) -> str:
         """Decode a single character"""
+        if len(char) != 1:
+            raise ValueError("decode precisely one char")
         try:
-            idx = self._chars_to.index(char)
+            idx = self._chars_to.index(char.lower())
         except ValueError:
             return char
-        return self._chars_from[idx]
+        decoded_char_lower = self._chars_from[idx]
+        if char == char.lower():
+            return decoded_char_lower
+        return decoded_char_lower.upper()
 
     def serialize(self) -> str:
         """Serialize the cipher itself"""
@@ -40,7 +53,7 @@ class SimpleSubCipher:
 
 
 def generate_simple_sub_cipher(
-        chars: str = string.ascii_letters
+        chars: str = string.ascii_lowercase
 ) -> SimpleSubCipher:
     """Create a new cipher"""
     chars_list = list(chars)
