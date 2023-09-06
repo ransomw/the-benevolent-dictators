@@ -1,6 +1,6 @@
-from typing import Optional
-from pathlib import Path
 from configparser import ConfigParser
+from pathlib import Path
+from typing import Optional
 
 from appdirs import user_config_dir
 

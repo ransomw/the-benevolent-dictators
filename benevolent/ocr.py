@@ -1,7 +1,7 @@
-from benevolent.conf import get_config
-
 import pytesseract
 from PIL import Image
+
+from benevolent.conf import get_config
 
 
 def load_config():

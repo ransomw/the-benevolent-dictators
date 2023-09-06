@@ -1,8 +1,8 @@
 import click
 from PIL import Image
 
-from benevolent.xor_enconder import create_xor_code
 from benevolent.conf import config_file_path
+from benevolent.xor_enconder import create_xor_code
 
 
 @click.group()
