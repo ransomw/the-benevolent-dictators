@@ -2,3 +2,4 @@ numpy~=1.25
 pillow~=10.0
 click~=8.1.7
 pytesseract~=0.3.10
+appdirs~=1.4.4
