@@ -31,7 +31,14 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip freeze > requirements-lock.txt
 
       - name: Test with pytest
         run: |
           pytest test/
+
+      - name: Upload requirements lock file
+        uses: actions/upload-artifact@v3
+        with:
+          name: requirements-lock
+          path: requirements-lock.txt
