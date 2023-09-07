@@ -3,29 +3,25 @@ these are various attempts to cleanup photos for input into tesseract
 https://tesseract-ocr.github.io/tessdoc/ImproveQuality.html
 so far, there's very little success
 """
-import sys, os
+import os
+import sys
+
+from writer import Writer
+
 sys.path.insert(0, os.path.abspath('.'))
 import string
-import numpy as np
 from pathlib import Path
-from pytesseract import (
-    image_to_string,
-    image_to_boxes,
-    image_to_data,
-    Output as PytesseractOutput,
-)
+
+import numpy as np
 from PIL import (
-    Image,
-    ImageOps,
-    ImageEnhance,
-    ImageFilter,
-    ImageDraw,
-    ImageFont,
+    Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 )
+from pytesseract import Output as PytesseractOutput
+from pytesseract import image_to_boxes, image_to_data, image_to_string
 from skimage.filters import threshold_otsu
+
 from benevolent.sub_cipher import (
-    load_simple_sub_cipher,
-    decode_simple_sub_cipher,
+    decode_simple_sub_cipher, load_simple_sub_cipher
 )
 
 img_path = Path(__file__).parent / "hello_world_encoded_02.jpg"
@@ -35,7 +31,6 @@ cipher_path = Path(__file__).parent.parent / "test" / "ciphers" / "simple_sub_01
 font = ImageFont.truetype(str(font_path), 32)
 cipher = load_simple_sub_cipher(cipher_path)
 img = Image.open(img_path)
-
 
 img_gray = ImageOps.grayscale(img)
 
@@ -90,11 +85,29 @@ def pytess_dict_to_text_and_boxes(data):
 # print(string)
 
 text_and_boxes = pytess_dict_to_text_and_boxes(data_dict)
+print(text_and_boxes)
+
+print(img_to_ocr.mode)
+img_with_boxes = img_to_ocr.copy().convert("RGB")
+wr = Writer(img_with_boxes, 32)
+for tnb in text_and_boxes:
+    wr.write_text_box(decode_simple_sub_cipher(cipher, tnb['text']), tnb["xy"][0])
+img_with_boxes.save("test.jpg")
+
+wr = Writer(img, 32*2)
+for tnb in text_and_boxes:
+    wr.draw_box([tuple(c * 2 for c in t)
+                 for t in tnb["xy"]])
+    wr.write_text_box(decode_simple_sub_cipher(cipher, tnb['text']), tuple(c * 2 for c in tnb["xy"][0]))
+
+img.save("test3.jpg")
+
 
 img_with_boxes = img_to_ocr.copy()
 draw_boxes = ImageDraw.Draw(img_with_boxes)
 for tnb in text_and_boxes:
     xy = tnb['xy']
+    print(xy)
     draw_boxes.rectangle(xy, outline=0)
 
 
@@ -112,6 +125,6 @@ for tnb in text_and_boxes:
     x1, y1 = p1
     text_img_resized = text_img.resize((x1-x0, y1-y0))
     img_with_text.paste(text_img_resized, p0)
+img_with_text.save("test2.jpg")
 
-
-breakpoint()
+#breakpoint()
