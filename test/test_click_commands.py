@@ -42,7 +42,7 @@ def test_xor_decode(tmp_path):
 
 
 @pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="Images are saved differently in GH actions env.")
-def test_text_is_writter(tmp_path, image1_hello_world_bmp):
+def test_text_is_written(tmp_path, image1_hello_world_bmp):
     """Test writting to a bmp image."""
     original_image_path = Path("test") / "images" / "acolchado.bmp"
     write_result_path = tmp_path / "write_result.bmp"
