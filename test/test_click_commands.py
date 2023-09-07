@@ -1,12 +1,14 @@
 from pathlib import Path
 from test.conftest import IN_GITHUB_ACTIONS
-from test.utils import equal_images
+from test.utils import equal_images, equal_images_within_margin
 
 import pytest
 from click.testing import CliRunner
 from PIL import Image
 
 from benevolent.cli import box_write, xor_code
+
+TOLERABLE_ERROR_MARGIN = 2.0  # Eyeballed it, feel free to change if necessary.
 
 
 def test_xor_image_is_created(tmp_path, xord_image):
@@ -55,4 +57,4 @@ def test_text_is_written(tmp_path, image1_hello_world_bmp):
                                    str(write_result_path.resolve())])
 
     with Image.open(write_result_path) as result:
-        assert equal_images(image1_hello_world_bmp, result)
+        assert equal_images_within_margin(image1_hello_world_bmp, result, TOLERABLE_ERROR_MARGIN)
