@@ -6,7 +6,9 @@ import pytest
 from click.testing import CliRunner
 from PIL import Image
 
-from benevolent.cli import box_write, xor_code
+from benevolent.cli import (
+    box_write, decode_with_cipher, encode_with_cipher, xor_code
+)
 
 TOLERABLE_ERROR_MARGIN = 2.0  # Eyeballed it, feel free to change if necessary.
 
@@ -58,3 +60,27 @@ def test_text_is_written(tmp_path, image1_hello_world_bmp):
 
     with Image.open(write_result_path) as result:
         assert equal_images_within_margin(image1_hello_world_bmp, result, TOLERABLE_ERROR_MARGIN)
+
+
+def test_encoding():
+    """Test encoding text from the cli."""
+    cipher_path = Path("test") / "ciphers" / "simple_sub_01.cipher"
+    runner = CliRunner()
+    result = runner.invoke(encode_with_cipher,
+                           ["hello world",
+                            str(cipher_path.resolve())])
+
+    assert result.exit_code == 0
+    assert result.output == "gpcch uhbcw\n"
+
+
+def test_decoding():
+    """Test decoding text from the cli."""
+    cipher_path = Path("test") / "ciphers" / "simple_sub_01.cipher"
+    runner = CliRunner()
+    result = runner.invoke(decode_with_cipher,
+                           ["gpcch uhbcw",
+                            str(cipher_path.resolve())])
+
+    assert result.exit_code == 0
+    assert result.output == "hello world\n"
