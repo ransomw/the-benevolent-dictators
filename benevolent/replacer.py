@@ -25,12 +25,15 @@ def get_text_size(image, text_box):
     """Return the ideal text size for this text box."""
     draw = ImageDraw.Draw(image)
     box_length = text_box["xy"][1][0] - text_box["xy"][0][0]
+    box_height = text_box["xy"][1][1] - text_box["xy"][0][1]
 
     jump_size = 64
     font_size = 64
     font = load_font(font_size)
     while True:
-        if draw.textlength(text_box["text"], font=font) < (box_length - PADDING):
+        tb = draw.textbbox(text_box["xy"][0], text_box["text"], font=font)
+        if _get_length(tb) < (box_length - PADDING) and \
+           _get_height(tb) < (box_height - PADDING):
             font_size += jump_size
         else:
             jump_size = jump_size // 2
@@ -44,3 +47,11 @@ def load_font(size: int) -> ImageFont.FreeTypeFont:
     """Load and return a ttp font."""
     font_path = str((Path("fonts") / "FreeMono.ttf").absolute())
     return ImageFont.truetype(font_path, size)
+
+
+def _get_length(box: tuple[int, int, int, int]):
+    return box[2] - box[0]
+
+
+def _get_height(box: tuple[int, int, int, int]):
+    return box[3] - box[1]
