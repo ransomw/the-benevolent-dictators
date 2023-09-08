@@ -5,6 +5,7 @@ from PIL import Image
 
 import benevolent.sub_cipher as sc
 from benevolent.conf import config_file_path
+from benevolent.ocr import translate_image
 from benevolent.writer import Writer
 from benevolent.xor_enconder import create_xor_code
 
@@ -90,10 +91,45 @@ def decode_with_cipher(encoded_text, cipher_path, cipher_seed):
 @cli.command()
 @click.argument("cipher-path", required=True, type=click.Path(exists=False, dir_okay=False))
 @click.option("--cipher-seed", required=False)
-def generate_cipher(cipher_path, cipher_seed):
+def generate_cipher(cipher_path, cipher_seed=None):
     """Generates a new cipher file."""
     if cipher_seed:
         sub_cipher = sc.generate_seeded_sub_cipher(cipher_seed)
     else:
         sub_cipher = sc.generate_simple_sub_cipher()
     sc.save_simple_sub_cipher(sub_cipher, Path(cipher_path))
+
+
+@cli.command()
+@click.argument("image-path-in", required=True, type=click.Path(exists=True))
+@click.option("--cipher-path", required=False, type=click.Path(exists=True))
+@click.option("--cipher-seed", required=False)
+@click.option("--format", required=False)
+@click.argument("image-path-out", required=True, type=click.Path(exists=False))
+def benevolens(image_path_in, cipher_path, cipher_seed, format, image_path_out):
+    """Reads text from an image and decodes it.
+
+     image-path-in: The path where the image you want to decode is.
+     --cipher-path: The path for the cipher file to use for decoding.
+     --cipher-seed: The cipher seed to use for decoding.
+          --format: valid PIL bitmap format.
+    image-path-out: The path to save the decoded image in.
+    """
+    if not cipher_path and not cipher_seed:
+        raise ValueError("Cipher or cipher seed needed for decoding.")
+    if cipher_path and cipher_seed:
+        raise ValueError("Either give a cipher to decode the string OR a seed to generate the cipher.")
+    if cipher_seed:
+        click.echo(cipher_seed)
+        cipher = sc.generate_seeded_sub_cipher(cipher_seed)
+    if cipher_path:
+        click.echo(cipher_path)
+        cipher = sc.load_simple_sub_cipher(Path(cipher_path))
+
+    img = Image.open(image_path_in)
+
+    translated_image = translate_image(img, cipher)
+    if format:
+        translated_image.save(image_path_out, bitmap_format=[format])
+    else:
+        translated_image.save(image_path_out)
