@@ -29,4 +29,4 @@ class Writer:
 
     def write_text(self, text: str, xy: tuple[float, float]) -> None:
         """Write the input text at the coordinates xy."""
-        self.draw.text(xy, text, font=self.font, fill=(255, 255, 255))
+        self.draw.text(xy, text, font=self.font, fill=(0, 0, 0))
