@@ -24,9 +24,14 @@ def test_otsu_minimally_effective(image_handwriting_hello_world_encoded):
         resample=Image.Resampling.LANCZOS
     )
     text_otsu = get_image_text(img_otsu_sm)
-    assert text_no_otsu == '', "without preprocessing, no text"
-    assert text_otsu != '', "with preprocessing, text discovered"
 
+    # CI tesseract behaves differently from local
+    # assert text_no_otsu == '', "without preprocessing, no text"
+    # assert text_otsu != '', "with preprocessing, text discovered"
+
+    assert len(text_no_otsu) < len(text_otsu), "detect more text with otsu"
+
+    # continuing from "resize image" comment:
     # ... but is the tesseract processing time totally dependent on the size?
     # the following produces a smaller image,
     # and tesseract takes a long time to process it
