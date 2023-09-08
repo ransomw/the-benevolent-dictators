@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -8,8 +9,19 @@ from benevolent.writer import Writer
 PADDING = 10
 
 
-def replace_coded_text_boxes(image: Image.Image, coded_text_and_boxes, cipher) -> Image.Image:
+def replace_coded_text_boxes(image: Image.Image,
+                             coded_text_and_boxes,
+                             cipher: sc.SimpleSubCipher | None = None,
+                             cipher_seed: None | Any = None
+                             ) -> Image.Image:
     """Replaces coded text from an image with decoded text."""
+    if not cipher and not cipher_seed:
+        raise ValueError("Cipher or cipher seed needed for decoding.")
+    if cipher and cipher_seed:
+        raise ValueError("Either give a cipher to decode the string OR a seed to generate the cipher.")
+    if cipher_seed:
+        cipher = sc.generate_seeded_sub_cipher(cipher_seed)
+
     output_image = image.copy()
     for text_box in coded_text_and_boxes:
         wr = Writer(output_image, get_text_size(image, text_box))
