@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 import random
 import string
 from pathlib import Path
+from typing import Any
 
 
 class SimpleSubCipher:
@@ -50,6 +53,9 @@ class SimpleSubCipher:
         """Serialize the cipher itself"""
         return self._chars_from + '\n' + self._chars_to
 
+    def __eq__(self, __value: SimpleSubCipher) -> bool:
+        return self._chars_from == __value._chars_from and self._chars_to == __value._chars_to
+
 
 def generate_simple_sub_cipher(
         chars: str = string.ascii_lowercase
@@ -58,6 +64,17 @@ def generate_simple_sub_cipher(
     chars_list = list(chars)
     random.shuffle(chars_list)
     return SimpleSubCipher(chars, ''.join(chars_list))
+
+
+def generate_seeded_sub_cipher(
+        seed: Any,
+        chars: str = string.ascii_lowercase
+) -> SimpleSubCipher:
+    """Create a new cipher generated with the given seed."""
+    random.seed(seed)
+    shufled_chars = list(chars)
+    random.shuffle(shufled_chars)
+    return SimpleSubCipher(chars, ''.join(shufled_chars))
 
 
 def encode_simple_sub_cipher(cipher: SimpleSubCipher, input: str) -> str:
