@@ -59,6 +59,12 @@ img_to_ocr = img_mono.resize(
 
 # img_to_ocr = img_mono
 
+# img_to_ocr = img_mono.thumbnail(
+#     tuple(c//2 for c in img_mono.size),
+#     resample=Image.Resampling.LANCZOS
+# )
+
+
 # data_string = image_to_string(img_to_ocr)
 
 data_dict = image_to_data(
@@ -126,5 +132,6 @@ for tnb in text_and_boxes:
     text_img_resized = text_img.resize((x1-x0, y1-y0))
     img_with_text.paste(text_img_resized, p0)
 img_with_text.save("test2.jpg")
+
 
 #breakpoint()
