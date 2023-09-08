@@ -14,12 +14,13 @@ def test_text_is_written(tmp_path, image1_hello_world_bmp):
     original_image_path = Path("test") / "images" / "acolchado.bmp"
     write_result_path = tmp_path / "write_result.bmp"
 
-    CliRunner().invoke(box_write, [str(original_image_path.resolve()),
-                                   "hello world",
-                                   "--size", 36,
-                                   "-x", 0,
-                                   "-y", 0,
-                                   str(write_result_path.resolve())])
+    result = CliRunner().invoke(box_write, [str(original_image_path.resolve()),
+                                            "hello world",
+                                            "--size", 36,
+                                            "-x", 0,
+                                            "-y", 0,
+                                            str(write_result_path.resolve())])
+    assert result.exit_code == 0
 
     with Image.open(write_result_path) as result:
         assert equal_images_within_margin(image1_hello_world_bmp, result, TOLERABLE_ERROR_MARGIN)

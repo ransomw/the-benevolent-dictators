@@ -12,9 +12,11 @@ def test_xor_image_is_created(tmp_path, xord_image):
     path = tmp_path / "xor_result.jpg"
     path_acolchado = Path("test") / "images" / "acolchado.jpg"
     path_sheet = Path("test") / "images" / "sheet.jpg"
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(path_sheet.resolve()),
-                                  str(path.resolve())])
+
+    result = CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
+                                           str(path_sheet.resolve()),
+                                           str(path.resolve())])
+    assert result.exit_code == 0
 
     with Image.open(path) as result:
         assert equal_images(xord_image, result)
@@ -26,13 +28,15 @@ def test_xor_decode(tmp_path):
     xor_decode_path = tmp_path / "xor_decode.bmp"
     path_acolchado = Path("test") / "images" / "acolchado.bmp"
     path_sheet = Path("test") / "images" / "sheet.bmp"
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(path_sheet.resolve()),
-                                  str(xor_result_path.resolve())])
 
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(xor_result_path.resolve()),
-                                  str(xor_decode_path.resolve())])
+    result = CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
+                                           str(path_sheet.resolve()),
+                                           str(xor_result_path.resolve())])
+    assert result.exit_code == 0
+    result = CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
+                                           str(xor_result_path.resolve()),
+                                           str(xor_decode_path.resolve())])
+    assert result.exit_code == 0
 
     with Image.open(path_sheet) as sheet_image, Image.open(
             xor_decode_path) as decoded_image:

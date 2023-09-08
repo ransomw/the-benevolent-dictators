@@ -21,6 +21,7 @@ def test_benevolens(tmp_path, image_hello_world_decoded):
                                  "--format", "bmp",
                                  str(path_result.resolve())
                                  ])
+    assert result.exit_code == 0
 
     with Image.open(path_result) as result:
         assert equal_images_within_margin(image_hello_world_decoded, result, TOLERABLE_ERROR_MARGIN)
