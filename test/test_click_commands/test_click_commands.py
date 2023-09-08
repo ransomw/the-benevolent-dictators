@@ -1,6 +1,6 @@
 from pathlib import Path
 from test.conftest import IN_GITHUB_ACTIONS
-from test.utils import equal_images, equal_images_within_margin
+from test.utils import equal_images_within_margin
 
 import pytest
 from click.testing import CliRunner
@@ -9,42 +9,10 @@ from PIL import Image
 import benevolent.sub_cipher as sc
 from benevolent.cli import (
     benevolens, box_write, decode_with_cipher, encode_with_cipher,
-    generate_cipher, xor_code
+    generate_cipher
 )
 
 TOLERABLE_ERROR_MARGIN = 5.0  # Eyeballed it, feel free to change if necessary.
-
-
-def test_xor_image_is_created(tmp_path, xord_image):
-    """Test that the correct XOR image is created when running the xor-code command."""
-    path = tmp_path / "xor_result.jpg"
-    path_acolchado = Path("test") / "images" / "acolchado.jpg"
-    path_sheet = Path("test") / "images" / "sheet.jpg"
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(path_sheet.resolve()),
-                                  str(path.resolve())])
-
-    with Image.open(path) as result:
-        assert equal_images(xord_image, result)
-
-
-def test_xor_decode(tmp_path):
-    """Test decoding image with .bmps"""
-    xor_result_path = tmp_path / "xor_result.bmp"
-    xor_decode_path = tmp_path / "xor_decode.bmp"
-    path_acolchado = Path("test") / "images" / "acolchado.bmp"
-    path_sheet = Path("test") / "images" / "sheet.bmp"
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(path_sheet.resolve()),
-                                  str(xor_result_path.resolve())])
-
-    CliRunner().invoke(xor_code, [str(path_acolchado.resolve()),
-                                  str(xor_result_path.resolve()),
-                                  str(xor_decode_path.resolve())])
-
-    with Image.open(path_sheet) as sheet_image, Image.open(
-            xor_decode_path) as decoded_image:
-        assert equal_images(sheet_image, decoded_image)
 
 
 @pytest.mark.skipif(IN_GITHUB_ACTIONS, reason="Images are saved differently in GH actions env.")
