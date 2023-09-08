@@ -115,6 +115,16 @@ def benevolens(image_path_in, cipher_path, cipher_seed, format, image_path_out):
           --format: valid PIL bitmap format.
     image-path-out: The path to save the decoded image in.
     """
+    img = Image.open(image_path_in)
+
+    translated_image = translate_image(img, _get_cipher(cipher_path, cipher_seed))
+    if format:
+        translated_image.save(image_path_out, bitmap_format=[format])
+    else:
+        translated_image.save(image_path_out)
+
+
+def _get_cipher(cipher_path, cipher_seed) -> sc.SimpleSubCipher:
     if not cipher_path and not cipher_seed:
         raise ValueError("Cipher or cipher seed needed for decoding.")
     if cipher_path and cipher_seed:
@@ -126,10 +136,4 @@ def benevolens(image_path_in, cipher_path, cipher_seed, format, image_path_out):
         click.echo(cipher_path)
         cipher = sc.load_simple_sub_cipher(Path(cipher_path))
 
-    img = Image.open(image_path_in)
-
-    translated_image = translate_image(img, cipher)
-    if format:
-        translated_image.save(image_path_out, bitmap_format=[format])
-    else:
-        translated_image.save(image_path_out)
+    return cipher

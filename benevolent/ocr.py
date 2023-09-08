@@ -1,5 +1,4 @@
 import string
-from typing import Any
 
 import numpy as np
 import pytesseract
@@ -31,12 +30,11 @@ def get_image_text(image: Image.Image) -> str:
 
 
 def translate_image(image: Image.Image,
-                    cipher: sc.SimpleSubCipher | None = None,
-                    cipher_seed: Any | None = None
+                    cipher: sc.SimpleSubCipher
                     ) -> Image.Image:
     """Reads an image with pytesseract and outputs a translated image."""
     text_boxes = _get_textboxes(image)
-    return replace_coded_text_boxes(image, text_boxes, cipher, cipher_seed)
+    return replace_coded_text_boxes(image, text_boxes, cipher)
 
 
 def _get_textboxes(image: Image.Image):
