@@ -19,10 +19,10 @@ class Writer:
 
     def write_text_box(self, text: str, xy: tuple[float, float]) -> None:
         """Write text inside a box."""
-        self.draw.rectangle(self.draw.textbbox(xy, text, self.font), fill=(0, 0, 0), outline=(0, 0, 0))
+        self.draw.rectangle(self.draw.textbbox(xy, text, self.font), fill=(255, 255, 255), outline=(0, 0, 0))
 
         self.write_text(text, xy)
 
     def write_text(self, text: str, xy: tuple[float, float]) -> None:
         """Write the input text at the coordinates xy."""
-        self.draw.text(xy, text, font=self.font, fill=(255, 255, 255))
+        self.draw.text(xy, text, font=self.font, fill=(0, 0, 0))
