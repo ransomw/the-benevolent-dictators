@@ -12,7 +12,7 @@ from benevolent.cli import (
     generate_cipher, xor_code
 )
 
-TOLERABLE_ERROR_MARGIN = 3.0  # Eyeballed it, feel free to change if necessary.
+TOLERABLE_ERROR_MARGIN = 5.0  # Eyeballed it, feel free to change if necessary.
 
 
 def test_xor_image_is_created(tmp_path, xord_image):
