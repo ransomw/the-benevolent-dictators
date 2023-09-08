@@ -58,6 +58,14 @@ def image_hello_world():
 
 
 @pytest.fixture
+def image_handwriting_hello_world_encoded():
+    """A handwritten message, "hello world," encoded using `sub_cipher`"""
+    path = Path("test") / "images" / "handwriting_hello_world_encoded.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def xord_image():
     """Create xord_image and automatically close after test."""
     path = Path("test") / "images" / "xord_image.jpg"
