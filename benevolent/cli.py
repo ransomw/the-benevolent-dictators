@@ -3,10 +3,8 @@ from pathlib import Path
 import click
 from PIL import Image
 
+import benevolent.sub_cipher as sc
 from benevolent.conf import config_file_path
-from benevolent.sub_cipher import (
-    decode_simple_sub_cipher, encode_simple_sub_cipher, load_simple_sub_cipher
-)
 from benevolent.writer import Writer
 from benevolent.xor_enconder import create_xor_code
 
@@ -56,9 +54,9 @@ def box_write(image_path, text, size, x, y, path_out):
 @click.argument("cipher-path", required=True, type=click.Path(exists=True))
 def encode_with_cipher(text, cipher_path):
     """Encodes some text with the given cipher."""
-    sub_cipher = load_simple_sub_cipher(Path(cipher_path))
+    sub_cipher = sc.load_simple_sub_cipher(Path(cipher_path))
 
-    click.echo(encode_simple_sub_cipher(sub_cipher, text))
+    click.echo(sc.encode_simple_sub_cipher(sub_cipher, text))
 
 
 @cli.command()
@@ -66,6 +64,14 @@ def encode_with_cipher(text, cipher_path):
 @click.argument("cipher-path", required=True, type=click.Path(exists=True))
 def decode_with_cipher(encoded_text, cipher_path):
     """Decodes some text with the given cipher."""
-    sub_cipher = load_simple_sub_cipher(Path(cipher_path))
+    sub_cipher = sc.load_simple_sub_cipher(Path(cipher_path))
 
-    click.echo(decode_simple_sub_cipher(sub_cipher, encoded_text))
+    click.echo(sc.decode_simple_sub_cipher(sub_cipher, encoded_text))
+
+
+@cli.command()
+@click.argument("cipher-path", required=True, type=click.Path(exists=False, dir_okay=False))
+def generate_cipher(cipher_path):
+    """Generates a new cipher file."""
+    sub_cipher = sc.generate_simple_sub_cipher()
+    sc.save_simple_sub_cipher(sub_cipher, Path(cipher_path))
