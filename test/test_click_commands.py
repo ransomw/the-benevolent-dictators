@@ -121,8 +121,8 @@ def test_seeded_cipher_generating(tmp_path):
 
     assert result.exit_code == 0
 
-    expected_cipher = sc.load_simple_sub_cipher(path_expected_cipher)
-    generated_cipher = sc.load_simple_sub_cipher(path_generated_cipher)
+    expected_cipher = sc.load_cipher(path_expected_cipher)
+    generated_cipher = sc.load_cipher(path_generated_cipher)
     assert expected_cipher == generated_cipher
 
 

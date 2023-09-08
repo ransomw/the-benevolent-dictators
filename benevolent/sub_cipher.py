@@ -23,7 +23,7 @@ class SimpleSubCipher:
         self._chars_from = chars_from
         self._chars_to = chars_to
 
-    def encode(self, char: str) -> str:
+    def _encode_char(self, char: str) -> str:
         """Encode a singe character"""
         if len(char) != 1:
             raise ValueError("encode precisely one char")
@@ -36,7 +36,7 @@ class SimpleSubCipher:
             return encoded_char_lower
         return encoded_char_lower.upper()
 
-    def decode(self, char: str) -> str:
+    def _decode_char(self, char: str) -> str:
         """Decode a single character"""
         if len(char) != 1:
             raise ValueError("decode precisely one char")
@@ -49,7 +49,7 @@ class SimpleSubCipher:
             return decoded_char_lower
         return decoded_char_lower.upper()
 
-    def serialize(self) -> str:
+    def _serialize(self) -> str:
         """Serialize the cipher itself"""
         return self._chars_from + '\n' + self._chars_to
 
@@ -77,31 +77,31 @@ def generate_seeded_sub_cipher(
     return SimpleSubCipher(chars, ''.join(shufled_chars))
 
 
-def encode_simple_sub_cipher(cipher: SimpleSubCipher, input: str) -> str:
+def encode_text(cipher: SimpleSubCipher, input: str) -> str:
     """Encode a string using a simple substitution cipher"""
     out = ''
     for c in input:
-        out += cipher.encode(c)
+        out += cipher._encode_char(c)
     return out
 
 
-def decode_simple_sub_cipher(cipher: SimpleSubCipher, input: str) -> str:
+def decode_text(cipher: SimpleSubCipher, input: str) -> str:
     """Decode a string using a simple substitution cipher"""
     out = ''
     for c in input:
-        out += cipher.decode(c)
+        out += cipher._decode_char(c)
     return out
 
 
-def save_simple_sub_cipher(cipher: SimpleSubCipher, path: Path):
+def save_cipher(cipher: SimpleSubCipher, path: Path):
     """Persist a simple substitution cipher to disk"""
     if path.exists():
         raise ValueError(f"path {path} already exists")
     with path.open('w') as f:
-        f.write(cipher.serialize())
+        f.write(cipher._serialize())
 
 
-def load_simple_sub_cipher(path: Path) -> SimpleSubCipher:
+def load_cipher(path: Path) -> SimpleSubCipher:
     """Read a simple substitution cipher from disk"""
     with path.open() as f:
         lines = f.readlines()

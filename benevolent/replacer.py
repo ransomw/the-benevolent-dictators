@@ -17,7 +17,7 @@ def replace_coded_text_boxes(image: Image.Image,
     for text_box in coded_text_and_boxes:
         wr = Writer(output_image, get_text_size(image, text_box))
         wr.draw_box(text_box["xy"])
-        wr.write_text(sc.decode_simple_sub_cipher(cipher, text_box["text"]), text_box["xy"][0])
+        wr.write_text(sc.decode_text(cipher, text_box["text"]), text_box["xy"][0])
     return output_image
 
 
