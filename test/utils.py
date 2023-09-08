@@ -10,6 +10,7 @@ def equal_images(image_1: Image.Image, image_2: Image.Image) -> bool:
 def equal_images_within_margin(image_1: Image.Image, image_2: Image.Image, error_margin: float) -> bool:
     """Return True when the percentage of differences within each image is bellow the error_margin."""
     percentage_of_dissimilarity = percentage_false((np.asarray(image_1) == np.asarray(image_2)))
+    print(percentage_of_dissimilarity)
     return percentage_of_dissimilarity < error_margin
 
 
