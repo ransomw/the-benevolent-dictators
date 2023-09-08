@@ -25,7 +25,7 @@ class Writer:
 
     def draw_box(self, bounding_box) -> None:
         """Draw a black box."""
-        self.draw.rectangle(bounding_box, fill=(0, 0, 0), outline=(0, 0, 0))
+        self.draw.rectangle(bounding_box, fill=(255, 255, 255), outline=(0, 0, 0))
 
     def write_text(self, text: str, xy: tuple[float, float]) -> None:
         """Write the input text at the coordinates xy."""
