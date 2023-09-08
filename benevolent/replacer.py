@@ -1,7 +1,11 @@
-from PIL import Image
+from pathlib import Path
+
+from PIL import Image, ImageDraw, ImageFont
 
 import benevolent.sub_cipher as sc
 from benevolent.writer import Writer
+
+PADDING = 10
 
 
 def replace_coded_text_boxes(image: Image.Image, coded_text_and_boxes, cipher) -> Image.Image:
@@ -15,5 +19,25 @@ def replace_coded_text_boxes(image: Image.Image, coded_text_and_boxes, cipher) -
 
 
 def get_text_size(image, text_box):
-    """TODO: return the ideal text size for this text box."""
-    return 64
+    """Return the ideal text size for this text box."""
+    draw = ImageDraw.Draw(image)
+    box_length = text_box["xy"][1][0] - text_box["xy"][0][0]
+
+    jump_size = 64
+    font_size = 64
+    font = load_font(font_size)
+    while True:
+        if draw.textlength(text_box["text"], font=font) < (box_length - PADDING):
+            font_size += jump_size
+        else:
+            jump_size = jump_size // 2
+            font_size -= jump_size
+        font = load_font(font_size)
+        if jump_size < 1:
+            return font_size
+
+
+def load_font(size: int) -> ImageFont.FreeTypeFont:
+    """Load and return a ttp font."""
+    font_path = str((Path("fonts") / "FreeMono.ttf").absolute())
+    return ImageFont.truetype(font_path, size)
