@@ -1,10 +1,6 @@
 import numpy as np
 import pytesseract
-from PIL import (
-    Image,
-    ImageFilter,
-    ImageOps,
-)
+from PIL import Image, ImageFilter, ImageOps
 from skimage.filters import threshold_otsu
 
 from benevolent.conf import get_config

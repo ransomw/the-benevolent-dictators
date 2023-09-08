@@ -1,9 +1,7 @@
 import pytest
 from PIL import Image
-from benevolent.ocr import (
-    get_image_text,
-    img_to_mono__norm_and_otsu,
-)
+
+from benevolent.ocr import get_image_text, img_to_mono__norm_and_otsu
 
 
 @pytest.mark.skip(reason="cut down on test time: OCR taking too long")
