@@ -85,23 +85,23 @@ def pytess_dict_to_text_and_boxes(data):
 # print(string)
 
 text_and_boxes = pytess_dict_to_text_and_boxes(data_dict)
-print(text_and_boxes)
 
-print(img_to_ocr.mode)
+# ---- BAUTISTA -----
 img_with_boxes = img_to_ocr.copy().convert("RGB")
 wr = Writer(img_with_boxes, 32)
 for tnb in text_and_boxes:
     wr.write_text_box(decode_simple_sub_cipher(cipher, tnb['text']), tnb["xy"][0])
-img_with_boxes.save("test.jpg")
+img_with_boxes.save(Path("proto") / "debug_images" / "test.jpg")
 
+# TEST 2
 wr = Writer(img, 32*2)
 for tnb in text_and_boxes:
     wr.draw_box([tuple(c * 2 for c in t)
                  for t in tnb["xy"]])
     wr.write_text_box(decode_simple_sub_cipher(cipher, tnb['text']), tuple(c * 2 for c in tnb["xy"][0]))
 
-img.save("test3.jpg")
-
+img.save(Path("proto") / "debug_images" / "test2.jpg")
+# ----------- END OF BAUTISTA ------
 
 img_with_boxes = img_to_ocr.copy()
 draw_boxes = ImageDraw.Draw(img_with_boxes)
