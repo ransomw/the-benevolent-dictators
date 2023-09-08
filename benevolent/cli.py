@@ -5,7 +5,7 @@ from PIL import Image
 
 import benevolent.sub_cipher as sc
 from benevolent.conf import config_file_path
-from benevolent.ocr import translate_image
+from benevolent.translator import translate_image
 from benevolent.writer import Writer
 from benevolent.xor_enconder import create_xor_code
 
