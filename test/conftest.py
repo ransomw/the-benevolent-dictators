@@ -74,6 +74,22 @@ def xord_image():
 
 
 @pytest.fixture
+def image_hello_world_encoded():
+    """Create the handwriting hello world encoded image."""
+    path = Path("test") / "images" / "handwriting_hello_world_encoded.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
+def image_hello_world_decoded():
+    """Create the handwriting hello world decoded image."""
+    path = Path("test") / "images" / "handwriting_hello_world_decoded.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def simple_sub_cipher():
     """Load the .cipher file into an object"""
     path = Path("test") / "ciphers" / "simple_sub_01.cipher"
