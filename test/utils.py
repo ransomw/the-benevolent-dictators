@@ -1,5 +1,3 @@
-from typing import Any
-
 import numpy as np
 from PIL import Image
 
@@ -11,10 +9,13 @@ def equal_images(image_1: Image.Image, image_2: Image.Image) -> bool:
 
 def equal_images_within_margin(image_1: Image.Image, image_2: Image.Image, error_margin: float) -> bool:
     """Return True when the percentage of differences within each image is bellow the error_margin."""
-    percentage_of_dissimilarity = percentage((np.asarray(image_1) == np.asarray(image_2)), False)
+    percentage_of_dissimilarity = percentage_false((np.asarray(image_1) == np.asarray(image_2)))
     return percentage_of_dissimilarity < error_margin
 
 
-def percentage(array: np.ndarray, value: Any) -> float:
-    """Return the percentage of the given value in the array."""
-    return np.sum(array == value)/array.shape[0]*100
+def percentage_false(array: np.ndarray) -> float:
+    """Return the percentage of Falses in the array."""
+    trues = np.sum(array == True)    # noqa: E712
+    falses = np.sum(array == False)  # noqa: E712
+    total = trues + falses
+    return (falses / total) * 100
