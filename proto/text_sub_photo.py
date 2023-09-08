@@ -20,6 +20,9 @@ from pytesseract import Output as PytesseractOutput
 from pytesseract import image_to_boxes, image_to_data, image_to_string
 from skimage.filters import threshold_otsu
 
+from benevolent.ocr import (
+    img_to_mono__norm_and_otsu,
+)
 from benevolent.sub_cipher import (
     decode_simple_sub_cipher, load_simple_sub_cipher
 )
@@ -32,25 +35,7 @@ font = ImageFont.truetype(str(font_path), 32)
 cipher = load_simple_sub_cipher(cipher_path)
 img = Image.open(img_path)
 
-img_gray = ImageOps.grayscale(img)
-
-img_blur1 = img_gray.filter(ImageFilter.BoxBlur(3))
-img_blur2 = img_gray.filter(ImageFilter.BoxBlur(50))
-
-arr_blur1 = np.asarray(img_blur1)
-arr_blur2 = np.asarray(img_blur2)
-arr_divided = np.ma.divide(arr_blur1, arr_blur2).data
-arr_normed = np.uint8(255*arr_divided/arr_divided.max())
-
-otsu_thres = threshold_otsu(arr_normed)
-
-print(f"otsu threshold {otsu_thres}")
-
-img_normed = Image.fromarray(arr_normed)
-
-img_thres = img_normed.point( lambda p: 255 if p > otsu_thres else 0 )
-
-img_mono = img_thres.convert('1')
+img_mono = img_to_mono__norm_and_otsu(img)
 
 img_to_ocr = img_mono.resize(
     tuple(c//2 for c in img_mono.size),
