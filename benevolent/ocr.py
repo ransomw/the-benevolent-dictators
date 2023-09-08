@@ -23,7 +23,7 @@ def get_image_text(image: Image.Image) -> str:
     return pytesseract.image_to_string(image)
 
 
-def img_to_mono__norm_and_otsu(
+def img_to_mono(
         img,
         font_blur=3,
         background_blur=50,

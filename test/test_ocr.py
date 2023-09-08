@@ -1,7 +1,7 @@
 import pytest
 from PIL import Image
 
-from benevolent.ocr import get_image_text, img_to_mono__norm_and_otsu
+from benevolent.ocr import get_image_text, img_to_mono
 
 
 @pytest.mark.skip(reason="cut down on test time: OCR taking too long")
@@ -12,10 +12,10 @@ def test_hello_world_image(image_hello_world):
 
 
 def test_otsu_minimally_effective(image_handwriting_hello_world_encoded):
-    """Observe `img_to_mono__norm_and_otsu` increases OCR effectiveness."""
+    """Observe `img_to_mono` increases OCR effectiveness."""
     img_no_otsu = image_handwriting_hello_world_encoded
     text_no_otsu = get_image_text(img_no_otsu)
-    img_otsu = img_to_mono__norm_and_otsu(img_no_otsu)
+    img_otsu = img_to_mono(img_no_otsu)
     # resize image for faster processing time by tesseract
     img_otsu_sm = img_otsu.resize(
         tuple(c//2 for c in img_otsu.size),
