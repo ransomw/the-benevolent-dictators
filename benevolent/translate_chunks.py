@@ -1,7 +1,7 @@
 from PIL import Image
 
-from benevolent.ocr import translate_image
 from benevolent.sub_cipher import SimpleSubCipher
+from benevolent.translator import translate_image
 
 
 def translate_chunks(image: Image.Image,

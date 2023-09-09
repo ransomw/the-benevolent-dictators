@@ -112,6 +112,17 @@ def image_messy_hello_world_decoded():
 
 
 @pytest.fixture
+def image_messy_hello_world_half_decoded():
+    """Create the hello world half decoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_decoded_2_half.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def image_clean_hello_world():
     """Create the clean hello world encoded 2.
 
