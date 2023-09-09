@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "benevolent"
+version = "0.0"
+description = "a secret codes image processing tool"
+requires-python = ">=3.9"
+readme = "README.md"
+
+dynamic = ["dependencies"]
+
+[project.scripts]
+benevolens = "benevolent.__main__:cli"
+
+[tool.setuptools]
+packages = ["benevolent"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+

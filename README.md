@@ -54,3 +54,12 @@ python -m benevolent --help
 ```shell
 python -m benevolent xor-code test/images/acolchado.jpg test/images/sheet.jpg as_xor.jpg
 ```
+## Build
+
+```shell
+python3 -m build
+```
+
+then one can install the `.whl` file in `dist/` with `pip` _in a different `venv` than for development_
+
+the command (executable) made available by this install is `benevolens`
