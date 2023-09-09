@@ -90,6 +90,50 @@ def image_hello_world_decoded():
 
 
 @pytest.fixture
+def image_messy_hello_world():
+    """Create the hello world encoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_encoded_2.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
+def image_messy_hello_world_decoded():
+    """Create the hello world decoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_decoded_2.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
+def image_clean_hello_world():
+    """Create the clean hello world encoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_encoded_3.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
+def image_clean_hello_world_decoded():
+    """Create the clean hello world decoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_decoded_3.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def simple_sub_cipher():
     """Load the .cipher file into an object"""
     path = Path("test") / "ciphers" / "simple_sub_01.cipher"
