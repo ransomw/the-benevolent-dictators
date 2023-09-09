@@ -19,4 +19,3 @@ packages = ["benevolent"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
-
