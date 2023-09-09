@@ -5,6 +5,18 @@ from benevolent.ocr import get_tesseract_data
 from benevolent.replacer import replace_coded_text_boxes
 
 
+def translate_chunks(image: Image.Image,
+                     cipher: sc.SimpleSubCipher,
+                     chunks: list[tuple[int, int, int, int]]
+                     ) -> Image.Image:
+    """Translate images in chunks, to hopefully increase tesseract accuracy."""
+    image_out = image.copy()
+    for chunk in chunks:
+        translated_chunk = translate_image(image.crop(chunk), cipher)
+        image_out.paste(translated_chunk, chunk)
+    return image_out
+
+
 def translate_image(image: Image.Image,
                     cipher: sc.SimpleSubCipher
                     ) -> Image.Image:

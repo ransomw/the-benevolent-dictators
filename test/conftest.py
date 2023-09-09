@@ -101,12 +101,34 @@ def image_messy_hello_world():
 
 
 @pytest.fixture
+def image_messy_hello_world_decoded():
+    """Create the hello world decoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_decoded_2.bmp"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
 def image_clean_hello_world():
-    """Create the hello world encoded 2.
+    """Create the clean hello world encoded 2.
 
     Use seed "abcd" to decode it.
     """
     path = Path("test") / "images" / "hello_world_encoded_3.jpg"
+    with Image.open(path) as image:
+        yield image
+
+
+@pytest.fixture
+def image_clean_hello_world_decoded():
+    """Create the clean hello world decoded 2.
+
+    Use seed "abcd" to decode it.
+    """
+    path = Path("test") / "images" / "hello_world_decoded_3.bmp"
     with Image.open(path) as image:
         yield image
 
