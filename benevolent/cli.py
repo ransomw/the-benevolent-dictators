@@ -5,7 +5,7 @@ from PIL import Image
 
 import benevolent.sub_cipher as sc
 from benevolent.conf import config_file_path
-from benevolent.ocr import translate_image
+from benevolent.translator import translate_image
 from benevolent.writer import Writer
 from benevolent.xor_enconder import create_xor_code
 
@@ -62,11 +62,11 @@ def encode_with_cipher(text, cipher_path, cipher_seed):
         raise ValueError("Either select a path to the cipher OR a seed to the cipher.")
 
     if cipher_path:
-        sub_cipher = sc.load_simple_sub_cipher(Path(cipher_path))
+        sub_cipher = sc.load_cipher(Path(cipher_path))
     if cipher_seed:
         sub_cipher = sc.generate_seeded_sub_cipher(cipher_seed)
 
-    click.echo(sc.encode_simple_sub_cipher(sub_cipher, text))
+    click.echo(sc.encode_text(sub_cipher, text))
 
 
 @cli.command()
@@ -81,11 +81,11 @@ def decode_with_cipher(encoded_text, cipher_path, cipher_seed):
         raise ValueError("Either select a path to the cipher OR a seed to the cipher.")
 
     if cipher_path:
-        sub_cipher = sc.load_simple_sub_cipher(Path(cipher_path))
+        sub_cipher = sc.load_cipher(Path(cipher_path))
     if cipher_seed:
         sub_cipher = sc.generate_seeded_sub_cipher(cipher_seed)
 
-    click.echo(sc.decode_simple_sub_cipher(sub_cipher, encoded_text))
+    click.echo(sc.decode_text(sub_cipher, encoded_text))
 
 
 @cli.command()
@@ -97,7 +97,7 @@ def generate_cipher(cipher_path, cipher_seed=None):
         sub_cipher = sc.generate_seeded_sub_cipher(cipher_seed)
     else:
         sub_cipher = sc.generate_simple_sub_cipher()
-    sc.save_simple_sub_cipher(sub_cipher, Path(cipher_path))
+    sc.save_cipher(sub_cipher, Path(cipher_path))
 
 
 @cli.command()
@@ -134,6 +134,6 @@ def _get_cipher(cipher_path, cipher_seed) -> sc.SimpleSubCipher:
         cipher = sc.generate_seeded_sub_cipher(cipher_seed)
     if cipher_path:
         click.echo(cipher_path)
-        cipher = sc.load_simple_sub_cipher(Path(cipher_path))
+        cipher = sc.load_cipher(Path(cipher_path))
 
     return cipher
