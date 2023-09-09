@@ -30,8 +30,8 @@ def print_config_path():
 def xor_code(path1, path2, path_out):
     """Exclusive or (xor) two images together
 
-    path1 is the path of the first image to use.
-    path2 is the path of the second image to use.
+    path1 is the path of the first image to use.\n
+    path2 is the path of the second image to use.\n
     path-out is the path where the resulting image will be saved.
     """
     with Image.open(path1) as image1, Image.open(path2) as image2:
@@ -49,8 +49,8 @@ def xor_code(path1, path2, path_out):
 def box_write(image_path, text, size, x, y, path_out):
     """Write text to an image inside a box.
 
-    image-path is the path of the image that will be written in.
-    text is the text to write.
+    image-path is the path of the image that will be written in.\n
+    text is the text to write.\n
     path-out is the path to save the image with the written text to.
     """
     with Image.open(image_path) as image:
@@ -125,7 +125,7 @@ def generate_cipher(cipher_path, cipher_seed=None):
 def benevolens(image_path_in, cipher_path, cipher_seed, format, image_path_out):
     """Reads text from an image and decodes it. Either provide a cipher file path or a cipher seed.
 
-    image-path-in is the path where the image you want to decode is.
+    image-path-in is the path where the image you want to decode is.\n
     image-path-out the path to save the decoded image in.
     """
     img = Image.open(image_path_in)
