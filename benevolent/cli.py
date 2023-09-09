@@ -28,7 +28,12 @@ def print_config_path():
 @click.argument("path2", required=True, type=click.Path(exists=True))
 @click.argument("path-out", required=True, type=click.Path(exists=False))
 def xor_code(path1, path2, path_out):
-    """Exclusive or (xor) two images together"""
+    """Exclusive or (xor) two images together
+
+    path1 is the path of the first image to use.
+    path2 is the path of the second image to use.
+    path-out is the path where the resulting image will be saved.
+    """
     with Image.open(path1) as image1, Image.open(path2) as image2:
         image_out = create_xor_code(image1, image2)
         image_out.save(path_out)
@@ -37,12 +42,17 @@ def xor_code(path1, path2, path_out):
 @cli.command()
 @click.argument("image-path", required=True, type=click.Path(exists=True))
 @click.argument("text", required=True, type=click.STRING)
-@click.option("--size", required=True, type=click.IntRange(min=1))
-@click.option("-x", required=True, type=click.IntRange(min=0))
-@click.option("-y", required=True, type=click.IntRange(min=0))
+@click.option("--size", required=True, type=click.IntRange(min=1), help="Size of the text font.")
+@click.option("-x", required=True, type=click.IntRange(min=0), help="x position to write in.")
+@click.option("-y", required=True, type=click.IntRange(min=0), help="x position to write in.")
 @click.argument("path-out", required=True, type=click.Path(exists=False))
 def box_write(image_path, text, size, x, y, path_out):
-    """Write text to an image inside a box."""
+    """Write text to an image inside a box.
+
+    image-path is the path of the image that will be written in.
+    text is the text to write.
+    path-out is the path to save the image with the written text to.
+    """
     with Image.open(image_path) as image:
         writer = Writer(image, size)
         writer.write_text_box(text, (x, y))
@@ -52,10 +62,11 @@ def box_write(image_path, text, size, x, y, path_out):
 
 @cli.command()
 @click.argument("text", required=True, type=click.STRING)
-@click.option("--cipher-path", required=False, type=click.Path(exists=True))
-@click.option("--cipher-seed", required=False)
+@click.option("--cipher-path", required=False, type=click.Path(exists=True),
+              help="Path where the cipher to use is, when encoding with one.")
+@click.option("--cipher-seed", required=False, help="Seed to use to encode the text, when encoding with one.")
 def encode_with_cipher(text, cipher_path, cipher_seed):
-    """Encodes some text with the given cipher."""
+    """Encodes some text with the given cipher. Either provide the path to a cipher file or a seed."""
     if not cipher_path and not cipher_seed:
         raise ValueError("Either a path or a seed for the cipher is needed.")
     if cipher_path and cipher_seed:
@@ -71,10 +82,11 @@ def encode_with_cipher(text, cipher_path, cipher_seed):
 
 @cli.command()
 @click.argument("encoded-text", required=True, type=click.STRING)
-@click.option("--cipher-path", required=False, type=click.Path(exists=True))
-@click.option("--cipher-seed", required=False)
+@click.option("--cipher-path", required=False, type=click.Path(exists=True),
+              help="Path where the cipher to use is, when decoding with one.")
+@click.option("--cipher-seed", required=False, help="Seed to decode the text with, when decoding with one.")
 def decode_with_cipher(encoded_text, cipher_path, cipher_seed):
-    """Decodes some text with the given cipher."""
+    """Decodes some text with the given cipher. Either provide the path to a cipher file or a seed."""
     if not cipher_path and not cipher_seed:
         raise ValueError("Either a path or a seed for the cipher is needed.")
     if cipher_path and cipher_seed:
@@ -90,9 +102,12 @@ def decode_with_cipher(encoded_text, cipher_path, cipher_seed):
 
 @cli.command()
 @click.argument("cipher-path", required=True, type=click.Path(exists=False, dir_okay=False))
-@click.option("--cipher-seed", required=False)
+@click.option("--cipher-seed", required=False, help="(Optional) Seed to use to generate the cipher.")
 def generate_cipher(cipher_path, cipher_seed=None):
-    """Generates a new cipher file."""
+    """Generates a new cipher file.
+
+    cipher-path is the path where the generated file will be saved to.
+    """
     if cipher_seed:
         sub_cipher = sc.generate_seeded_sub_cipher(cipher_seed)
     else:
@@ -102,18 +117,16 @@ def generate_cipher(cipher_path, cipher_seed=None):
 
 @cli.command()
 @click.argument("image-path-in", required=True, type=click.Path(exists=True))
-@click.option("--cipher-path", required=False, type=click.Path(exists=True))
-@click.option("--cipher-seed", required=False)
-@click.option("--format", required=False)
+@click.option("--cipher-path", required=False, type=click.Path(exists=True),
+              help="The path where the cipher file is located, when decoding with one.")
+@click.option("--cipher-seed", required=False, help="The seed to use for decoding, when decoding with one.")
+@click.option("--format", required=False, help="Valid PIL bitmap format.")
 @click.argument("image-path-out", required=True, type=click.Path(exists=False))
 def benevolens(image_path_in, cipher_path, cipher_seed, format, image_path_out):
-    """Reads text from an image and decodes it.
+    """Reads text from an image and decodes it. Either provide a cipher file path or a cipher seed.
 
-     image-path-in: The path where the image you want to decode is.
-     --cipher-path: The path for the cipher file to use for decoding.
-     --cipher-seed: The cipher seed to use for decoding.
-          --format: valid PIL bitmap format.
-    image-path-out: The path to save the decoded image in.
+    image-path-in is the path where the image you want to decode is.
+    image-path-out the path to save the decoded image in.
     """
     img = Image.open(image_path_in)
 
