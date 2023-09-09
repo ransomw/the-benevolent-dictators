@@ -115,4 +115,4 @@ def image_clean_hello_world():
 def simple_sub_cipher():
     """Load the .cipher file into an object"""
     path = Path("test") / "ciphers" / "simple_sub_01.cipher"
-    return sub_cipher.load_simple_sub_cipher(path)
+    return sub_cipher.load_cipher(path)
