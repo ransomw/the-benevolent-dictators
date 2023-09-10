@@ -4,7 +4,7 @@ import click
 from PIL import Image
 
 import benevolent.sub_cipher as sc
-from benevolent.conf import config_file_path
+from benevolent import conf
 from benevolent.translate_chunks import translate_chunks
 from benevolent.translator import translate_image
 from benevolent.writer import Writer
@@ -20,8 +20,16 @@ def cli():
 @cli.command()
 def print_config_path():
     """Print the location of the config file to stdout"""
-    path = config_file_path()
+    path = conf.config_file_path()
     click.echo(f"{path}")
+
+
+@cli.command()
+def create_config():
+    """Create the config file required for this project."""
+    tesseract_path = click.prompt("Please enter the path to your tesseract executable")
+    click.echo(tesseract_path)
+    conf.create_config(tesseract_path)
 
 
 @cli.command()
