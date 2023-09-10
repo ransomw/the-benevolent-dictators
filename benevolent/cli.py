@@ -28,7 +28,6 @@ def print_config_path():
 def create_config():
     """Create the config file required for this project."""
     tesseract_path = click.prompt("Please enter the path to your tesseract executable")
-    click.echo(tesseract_path)
     conf.create_config(tesseract_path)
 
 
