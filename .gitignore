@@ -33,3 +33,4 @@ build/
 ###
 
 benevolent.egg-info/
+benevolent.conf
