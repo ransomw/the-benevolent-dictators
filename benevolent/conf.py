@@ -2,10 +2,12 @@ from configparser import ConfigParser
 from pathlib import Path
 from typing import Optional
 
+from appdirs import user_config_dir
+
 
 def config_file_path() -> Path:
     """Returns the path to the config file"""
-    return Path("benevolent.conf")
+    return Path(user_config_dir("benevolent", "tbd")) / "benevolent.conf"
 
 
 def create_config(tesseract_path: str) -> None:
