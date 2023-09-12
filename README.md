@@ -64,4 +64,3 @@ python -m benevolent --help
 ```shell
 python -m benevolent xor-code test/images/acolchado.jpg test/images/sheet.jpg as_xor.jpg
 ```
-
