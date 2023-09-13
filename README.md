@@ -44,7 +44,11 @@ benevolens create-config
 And paste the absolute path to your `tesseract.exe` (that you hopefully saved earlier) in the prompt that you are given.
 
 On Linux you need to:
-## TODO
+```
+python3 -m pip install .\dist\benevolent-0.0-py3-none-any.whl
+```
+and ensure `tesseract` is on your `PATH` environment variable so that `which tesseract` should print the path.
+
 
 Note: if you get any `tesseract not found` errors while trying to use the program, try to:
 ```
