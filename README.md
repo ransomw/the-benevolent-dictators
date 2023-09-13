@@ -59,6 +59,9 @@ And paste the absolute path to your tesseract executable.
 
 ## Usage
 
+You can read this section if you wish to understand all the available commands and what they do, to use with your own images. Otherwise you can head to the [tutorial](https://github.com/ransomw/the-benevolent-dictators/blob/tutorial/README.md#tutorial),
+there you can follow the instructions command by command with the images we already provide, to get a quick feel for our functionality.
+
 ### Some considerations about image recognition
 Tesseract doesn't work perfectly! Especially not for handwritten text. You can do the following to help our tool better recognize the text you write:
 - Use black ink or a black marker on a white paper.
@@ -156,7 +159,8 @@ benevolens generate-cipher [path_to_save_the_cipher] --cipher-seed [a seed to us
 
 This command lets you generate your secret messages with a given code.
 
-NOTE: Please use only lowercase characters for your text!
+NOTE: Tesseract tends to do better with uppercase characters! Although can use lowercase or uppercase, the resulting text will be the
+same.
 
 You can use either of these options:
 
@@ -182,3 +186,84 @@ To use it:
 ```
 benevolens box-write [path_to_the_image_you_want_to_write] [string of text you want to write] --size [size for the text (a number)] -x [left coordinate of the text box] -y [top coordinate of the text box] [path_to_save_the_written_image_to]
 ```
+
+## Tutorial
+Once you have properly installed our program you should be able to follow this tutorial command by command to get a sample of what a "normal"
+usage would be like.
+
+Make sure you're in the console, and your working directory is `the-benevolent-dictators` dir.
+
+### Most basic usage ever
+Let's start by generating some encoded text that can be translated by `benevolens`:
+
+```
+benevolens encode-with-cipher "HELLO PYDIS" --cipher-seed benevolent
+```
+You should see `FBAAU GREIQ` as the output. That's our encoded text, and the code required to decode it is `benevolent`. Now let's do a
+simple `box-write` to a blank image:
+
+In windows:
+```
+benevolens box-write .\sample\blank.png "FBAAU" --size 64 -x 100 -y 100 .\sample\blank_hello.png
+
+benevolens box-write .\sample\blank_hello.png "GREIQ" --size 64 -x 200 -y 200 .\sample\blank_hello.png
+```
+In linux:
+```
+benevolens box-write ./sample/blank.png "FBAAU" --size 64 -x 100 -y 100 ./sample/blank_hello.png
+
+benevolens box-write ./sample/blank.png "GREIQ" --size 64 -x 200 -y 200 ./sample/blank_hello.png
+```
+You should see a `blank_hello.png` being created in the `/sample` dir with `FBAAU GREIQ` written in it.
+
+Let's translate it now!:
+
+In windows:
+```
+benevolens benevolens .\sample\blank_hello.png --cipher-seed benevolent .\sample\decoded_hello.png
+```
+In linux:
+```
+benevolens benevolens ./sample/blank_hello.png --cipher-seed benevolent ./sample/decoded_hello.png
+```
+Now you should see our decoded message back in `/sample/decoded_hello.png`!
+
+### Handwriten text
+Alright, just writing to a blank image and getting the text back isn't the most interesting. Why don't
+we try writting `FBAAU GREIQ` in a piece of paper and see what happens? Well, we already provided you with an
+image that has this message written to save you some time. Let's decode it as follows:
+In windows:
+```
+benevolens benevolens .\sample\encoded_hello.jpeg --cipher-seed benevolent .\sample\decoded_hello.jpeg
+```
+In linux:
+```
+benevolens benevolens ./sample/encoded_hello.jpeg --cipher-seed benevolent ./sample/decoded_hello.jpeg
+```
+If you go to `/sample/decoded_hello.jpeg` now you'll see the message decoded right there! (Yes, the size of the
+white box looks a little weird, we thought we had that bug fixed but apparently not).
+
+### More complicated text placement
+Hmmm, but what happens if your paper is just in a portion of a bigger image?
+
+Well, if you try to translate `/sample/cut_hello.jpeg` with just `benevolens` you won't find any success. For these
+situations we have `benevolens-segments`:
+
+In windows:
+```
+benevolens benevolens-segments .\sample\cut_hello.jpeg --cipher-seed benevolent 174 280 360 345 .\sample\decoded_hello.jpeg
+
+benevolens benevolens-segments .\sample\decoded_hello.jpeg --cipher-seed benevolent 200 920 490 1046 .\sample\decoded_hello.jpeg
+```
+In linux:
+```
+benevolens benevolens-segments ./sample/cut_hello.jpeg --cipher-seed benevolent 174 280 360 345 ./sample/decoded_hello.jpeg
+
+benevolens benevolens-segments ./sample/decoded_hello.jpeg --cipher-seed benevolent 200 920 490 1046 ./sample/decoded_hello.jpeg
+```
+Now you should see `/sample/decoded_hello.jpeg` you'll find it... mostly translated! Yes... it says `hdllo` instead of `hello`, as
+you can see handwriting recognition is sadly not perfect. The conditions in which you take the photo are very important, the writing in
+`cut_hello.jpeg` was just cut from `encoded_hello.jpeg`, and yet the translation in the cut one wasn't perfect.
+
+About how to find the corners of the segment that contains your text... well, sadly you'll have to use some external program. `In my case I
+just use paint, it tells you the coordinates of your cursor in the bottom left.`
