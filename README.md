@@ -54,16 +54,3 @@ Note: if you get any `tesseract not found` errors while trying to use the progra
 benevolens create-config
 ```
 And paste the absolute path to your tesseract executable.
-
-
-## Usage
-
-### Help
-```shell
-python -m benevolent --help
-```
-
-### Basic usage
-```shell
-python -m benevolent xor-code test/images/acolchado.jpg test/images/sheet.jpg as_xor.jpg
-```
