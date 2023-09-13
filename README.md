@@ -188,7 +188,7 @@ benevolens box-write [path_to_the_image_you_want_to_write] [string of text you w
 Once you have properly installed our program you should be able to follow this tutorial command by command to get a sample of what a "normal"
 usage would be like.
 
-Make sure you're in the console, inside the `the-benevolent-dictators` dir.
+Make sure you're in the console, and your working directory is `the-benevolent-dictators` dir.
 
 ### Most basic usage ever
 Let's start by generating some encoded text that can be translated by `benevolens`:
