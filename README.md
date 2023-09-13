@@ -156,7 +156,8 @@ benevolens generate-cipher [path_to_save_the_cipher] --cipher-seed [a seed to us
 
 This command lets you generate your secret messages with a given code.
 
-NOTE: Please use only lowercase characters for your text!
+NOTE: Tesseract tends to do better with uppercase characters! Although can use lowercase or uppercase, the resulting text will be the
+same.
 
 You can use either of these options:
 
@@ -193,15 +194,33 @@ Make sure you're in the console, inside the `the-benevolent-dictators` dir.
 Let's start by generating some encoded text that can be translated by `benevolens`:
 
 ```
-benevolens encode-with-cipher "hello pydis" --cipher-seed benevolent
+benevolens encode-with-cipher "HELLO PYDIS" --cipher-seed benevolent
 ```
-You should see `fbaau greiq` as the output. Now let's do a simple `box-write` to a blank image:
+You should see `FBAAU GREIQ` as the output. That's our encoded text, and the code required to decode it is `benevolent`. Now let's do a
+simple `box-write` to a blank image:
 
 In windows:
 ```
-benevolens box-write .\sample\blank.png "fbaau greiq" --size 64 -x 100 -y 100 .\blank_hello.png
+benevolens box-write .\sample\blank.png "FBAAU" --size 64 -x 100 -y 100 .\sample\blank_hello.png
+
+benevolens box-write .\sample\blank_hello.png "GREIQ" --size 64 -x 200 -y 200 .\sample\blank_hello.png
 ```
 In linux:
 ```
-benevolens box-write ./sample/blank.png "fbaau greiq" --size 64 -x 100 -y 100 ./blank_hello.png
+benevolens box-write ./sample/blank.png "FBAAU" --size 64 -x 100 -y 100 ./sample/blank_hello.png
+
+benevolens box-write ./sample/blank.png "GREIQ" --size 64 -x 200 -y 200 ./sample/blank_hello.png
 ```
+You should see a `blank_hello.png` being created in the `/sample` dir with `FBAAU GREIQ` written in it.
+
+Let's translate it now!:
+
+In windows:
+```
+benevolens benevolens .\sample\blank_hello.png --cipher-seed benevolent .\sample\decoded_hello.png
+```
+In linux:
+```
+benevolens benevolens ./sample/blank_hello.png --cipher-seed benevolent ./sample/decoded_hello.png
+```
+Now you should see our decoded message back in `/sample/decoded_hello.png`!
