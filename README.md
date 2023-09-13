@@ -182,3 +182,26 @@ To use it:
 ```
 benevolens box-write [path_to_the_image_you_want_to_write] [string of text you want to write] --size [size for the text (a number)] -x [left coordinate of the text box] -y [top coordinate of the text box] [path_to_save_the_written_image_to]
 ```
+
+## Tutorial
+Once you have properly installed our program you should be able to follow this tutorial command by command to get a sample of what a "normal"
+usage would be like.
+
+Make sure you're in the console, inside the `the-benevolent-dictators` dir.
+
+### Most basic usage ever
+Let's start by generating some encoded text that can be translated by `benevolens`:
+
+```
+benevolens encode-with-cipher "hello pydis" --cipher-seed benevolent
+```
+You should see `fbaau greiq` as the output. Now let's do a simple `box-write` to a blank image:
+
+In windows:
+```
+benevolens box-write .\sample\blank.png "fbaau greiq" --size 64 -x 100 -y 100 .\blank_hello.png
+```
+In linux:
+```
+benevolens box-write ./sample/blank.png "fbaau greiq" --size 64 -x 100 -y 100 ./blank_hello.png
+```
