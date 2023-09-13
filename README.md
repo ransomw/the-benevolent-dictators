@@ -59,6 +59,9 @@ And paste the absolute path to your tesseract executable.
 
 ## Usage
 
+You can read this section if you wish to understand all the available commands and what they do, to use with your own images. Otherwise you can head to the [tutorial](https://github.com/ransomw/the-benevolent-dictators/blob/tutorial/README.md#tutorial),
+there you can follow the instructions command by command with the images we already provide, to get a quick feel for our functionality.
+
 ### Some considerations about image recognition
 Tesseract doesn't work perfectly! Especially not for handwritten text. You can do the following to help our tool better recognize the text you write:
 - Use black ink or a black marker on a white paper.
