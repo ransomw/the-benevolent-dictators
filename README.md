@@ -84,7 +84,7 @@ To use it you have two options:
 
 (Yes, you have to write benevolens twice.)
 
-(If the text was encoded with a cipher file:) 
+(If the text was encoded with a cipher file:)
 ```
 benevolens benevolens [path_to_the_image_you_want_to_translate] --cipher-path [path_to_the_cipher_file] [path_to_save_output_image]
 ```
@@ -93,7 +93,7 @@ benevolens benevolens [path_to_the_image_you_want_to_translate] --cipher-path [p
 benevolens benevolens [path_to_the_image_you_want_to_translate] --cipher-seed [seed used to encode the text] [path_to_save_output_image]
 ```
 #### benevolens-segments
-Works like benevolens but lets you specify which segment of the image the text is located in (sorry, it's called segments but you can only do one at a time!). This is useful if you have an image with a lot of stuff in it and the 
+Works like benevolens but lets you specify which segment of the image the text is located in (sorry, it's called segments but you can only do one at a time!). This is useful if you have an image with a lot of stuff in it and the
 paper with your text is located in only one part of the image.
 
 Just like with `benevolens` you have to specify either a `--cipher-path` or a `--cipher-seed`:
@@ -136,7 +136,7 @@ NOTE: We've tested this command with `.jpg`, `.png` and `.bmp` images. Using the
 
 #### generate-cipher
 
-Generate cipher allows you to create a cipher file. This is a simple text file with the code (keep it secret!) to encode and decode messages using a substitution cipher. This could be useful if you tried to use seeds to encode and decode but encounter errors 
+Generate cipher allows you to create a cipher file. This is a simple text file with the code (keep it secret!) to encode and decode messages using a substitution cipher. This could be useful if you tried to use seeds to encode and decode but encounter errors
 between machines (although we ran unit tests and it did not happen happen).
 
 To use this command call:
