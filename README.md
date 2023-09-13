@@ -224,3 +224,43 @@ In linux:
 benevolens benevolens ./sample/blank_hello.png --cipher-seed benevolent ./sample/decoded_hello.png
 ```
 Now you should see our decoded message back in `/sample/decoded_hello.png`!
+
+### Handwriten text
+Alright, just writing to a blank image and getting the text back isn't the most interesting. Why don't
+we try writting `FBAAU GREIQ` in a piece of paper and see what happens? Well, we already provided you with an
+image that has this message written to save you some time. Let's decode it as follows:
+In windows:
+```
+benevolens benevolens .\sample\encoded_hello.jpeg --cipher-seed benevolent .\sample\decoded_hello.jpeg
+```
+In linux:
+```
+benevolens benevolens ./sample/encoded_hello.jpeg --cipher-seed benevolent ./sample/decoded_hello.jpeg
+```
+If you go to `/sample/decoded_hello.jpeg` now you'll see the message decoded right there! (Yes, the size of the
+white box looks a little weird, we thought we had that bug fixed but apparently not).
+
+### More complicated text placement
+Hmmm, but what happens if your paper is just in a portion of a bigger image?
+
+Well, if you try to translate `/sample/cut_hello.jpeg` with just `benevolens` you won't find any success. For these
+situations we have `benevolens-segments`:
+
+In windows:
+```
+benevolens benevolens-segments .\sample\cut_hello.jpeg --cipher-seed benevolent 174 280 360 345 .\sample\decoded_hello.jpeg
+
+benevolens benevolens-segments .\sample\decoded_hello.jpeg --cipher-seed benevolent 200 920 490 1046 .\sample\decoded_hello.jpeg
+```
+In linux:
+```
+benevolens benevolens-segments ./sample/cut_hello.jpeg --cipher-seed benevolent 174 280 360 345 ./sample/decoded_hello.jpeg
+
+benevolens benevolens-segments ./sample/decoded_hello.jpeg --cipher-seed benevolent 200 920 490 1046 ./sample/decoded_hello.jpeg
+```
+Now you should see `/sample/decoded_hello.jpeg` you'll find it... mostly translated! Yes... it says `hdllo` instead of `hello`, as
+you can see handwriting recognition is sadly not perfect. The conditions in which you take the photo are very important, the writing in
+`cut_hello.jpeg` was just cut from `encoded_hello.jpeg`, and yet the translation in the cut one wasn't perfect.
+
+About how to find the corners of the segment that contains your text... well, sadly you'll have to use some external program. `In my case I
+just use paint, it tells you the coordinates of your cursor in the bottom left.`
