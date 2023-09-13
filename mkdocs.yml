@@ -1,0 +1,13 @@
+site_name: Benevolens
+site_url: http://www.github.com/ransomw/the-benevolent-dictators
+
+nav:
+  - Home: index.md
+  - CLI: cli.md
+
+theme: readthedocs
+
+markdown_extensions:
+  - pymdownx.snippets:
+      check_paths: true
+  - mkdocs-click
