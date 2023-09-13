@@ -17,4 +17,3 @@ build~=1.0.3
 mkdocs~=1.5.2
 pymdown-extensions~=10.3
 mkdocs-click~=0.8.0
-
