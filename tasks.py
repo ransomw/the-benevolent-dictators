@@ -6,6 +6,7 @@ import os
 
 from invoke import task
 
+
 @task
 def clean(c, docs=False, bytecode=False, extra=''):
     if not os.path.exists("/bin/bash"):
