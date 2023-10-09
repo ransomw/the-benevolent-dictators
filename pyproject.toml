@@ -16,6 +16,10 @@ benevolens = "benevolent.__main__:cli"
 
 [tool.setuptools]
 packages = ["benevolent"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+benevolent = ["fonts/*.ttf"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
