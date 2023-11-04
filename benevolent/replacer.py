@@ -45,7 +45,7 @@ def get_text_size(image, text_box):
 
 def load_font(size: int) -> ImageFont.FreeTypeFont:
     """Load and return a ttp font."""
-    font_path = str((Path("fonts") / "FreeMono.ttf").absolute())
+    font_path = str(Path(__file__).parent / "fonts" / "FreeMono.ttf")
     return ImageFont.truetype(font_path, size)
 
 

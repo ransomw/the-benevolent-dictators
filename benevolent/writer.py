@@ -14,7 +14,7 @@ class Writer:
             - text_size: The size of the text that will be written.
         """
         self.draw = ImageDraw.Draw(image)
-        font_path = str((Path("fonts") / "FreeMono.ttf").absolute())
+        font_path = str(Path(__file__).parent / "fonts" / "FreeMono.ttf")
         self.font = ImageFont.truetype(font_path, text_size)
 
     def write_text_box(self, text: str, xy: tuple[float, float]) -> None:
