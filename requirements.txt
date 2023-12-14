@@ -4,3 +4,5 @@ click~=8.1.7
 pytesseract~=0.3.10
 appdirs~=1.4.4
 scikit-image~=0.21.0
+quart~=0.19.4
+
