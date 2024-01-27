@@ -25,7 +25,19 @@ def allowed_file(filename: str):
 
 @app.route("/box-write")
 async def box_write():
-    return 'unimplemented'
+    return '''
+        <!doctype html>
+        <title>Box write</title>
+        <h1>Box write</h1>
+        <form method=post enctype=multipart/form-data>
+          <input type=number name=x>
+          <input type=number name=y>
+          <input type=number name=size>
+          <input type=text name=text>
+          <input type=file name=file>
+          <input type=submit value=Upload>
+        </form>
+        '''
 
 
 @app.route("/uploaded/<filename>")
